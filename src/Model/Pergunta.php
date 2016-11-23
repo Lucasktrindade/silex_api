@@ -28,7 +28,7 @@ class Pergunta extends Model
 
     public function alternativas()
     {
-        return $this->hasMany(Alternativa::class);
+        return $this->hasMany('Game\model\Alternativa');
     }
 
 }

@@ -11,4 +11,10 @@ use Game\model\Pergunta;
 class PerguntaRepository extends BaseRepository
 {
     protected $modelClass = Pergunta::class;
+
+    public function getAlternativas($pergunta)
+    {
+        return $pergunta->alternativas()->get();
+    }
+
 }

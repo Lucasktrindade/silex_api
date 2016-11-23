@@ -1,32 +1,32 @@
 <?php
-
-namespace Game\Controllers;
-
-use Game\Repository\PerguntaRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Created by PhpStorm.
  * User: lucas.trindade
- * Date: 25/10/2016
- * Time: 16:57
+ * Date: 23/11/2016
+ * Time: 11:13
  */
 
-class PerguntaController
+namespace Game\Controllers;
+
+
+use Game\Repository\AlternativaRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+class AlternativaController
 {
     protected $repo;
 
-    public function __construct(PerguntaRepository $repo)
+    public function __construct(AlternativaRepository $repo)
     {
         $this->repo = $repo;
     }
 
-    public function PerguntaAll()
+    public function AlternativaAll()
     {
         return new JsonResponse($this->repo->findAll());
     }
-    public function PerguntabyId($id)
+    public function AlternativabyId($id)
     {
         $data = $this->repo->findById($id);
 
@@ -35,9 +35,9 @@ class PerguntaController
         else
             return new JsonResponse("Objeto não encontrado", 404);
     }
-    public function PerguntaAdd(Request $request)
+    public function AlternativaAdd(Request $request)
     {
-        $data = array('texto' => $request->request->get("texto"));
+        $data = array('e_correta' => $request->request->get("e_correta"), 'texto' => $request->request->get('texto'), 'pergunta_id' => $request->request->get('pergunta_id'));
         $data = $this->repo->store($data);
         if($data != null)
             return new JsonResponse($data,201);
@@ -45,7 +45,7 @@ class PerguntaController
             return new JsonResponse("Objeto não adicionado",400);
     }
 
-    public function PerguntaDelete($id)
+    public function AlternativaDelete($id)
     {
         $data = $this->repo->delete($id);
         if($data != null)
@@ -54,24 +54,13 @@ class PerguntaController
             return new JsonResponse("Objeto não encontrado",400);
     }
 
-    public function PerguntaUpdate(Request $request, $id)
+    public function AlternativaUpdate(Request $request, $id)
     {
-        $data = array('texto' => $request->request->get("texto"));
+        $data = array('e_correta' => $request->request->get("e_correta"), 'texto' => $request->request->get('texto'));
         $data = $this->repo->update($id,$data);
         if($data != null)
             return new JsonResponse($data,200);
         else
             return new JsonResponse("Objeto não atualizado",400);
     }
-
-    public function Alternativas($id)
-    {
-        $data = $this->repo->findById($id);
-        if($data != null){
-            $pergunta = $this->repo->getAlternativas($data);
-            return new JsonResponse($pergunta, 200);
-        }else
-            return new JsonResponse("Objeto não encontrado", 404);
-    }
-
 }

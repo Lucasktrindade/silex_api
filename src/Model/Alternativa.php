@@ -14,6 +14,12 @@ use Illuminate\Database\Eloquent\Model;
 class Alternativa extends Model
 {
 
-    protected $fillable = ['texto','e_correta'];
+    protected $fillable = ['e_correta','texto','pergunta_id'];
+    public $timestamps = false;
     protected $table = 'alternativas';
+
+    public function pergunta()
+    {
+        return $this->belongsTo(Pergunta::class);
+    }
 }
