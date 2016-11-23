@@ -14,9 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 class Pessoa extends Model
 {
 
-    protected $fillable = ['nome','profissao_desejada','email','data_nascimento','sexo','escolaridade','telefone','pontuacao'];
+    protected $fillable = ['nome','profissao_desejada','email','data_nascimento','sexo','escolaridade','telefone'];
+    public $timestamps = false;
     protected $table = 'pessoa';
-
-
 
 }
