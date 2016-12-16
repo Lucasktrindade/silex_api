@@ -3,31 +3,29 @@
  * Created by PhpStorm.
  * User: lucas.trindade
  * Date: 23/11/2016
- * Time: 15:52
+ * Time: 19:37
  */
 
 namespace Game\Controllers;
 
-
-use Game\Repository\PessoaRepository;
+use Game\Repository\PartidaRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Game\Model\Bcrypt;
 
-class PessoaController
+class PartidaController
 {
     protected $repo;
 
-    public function __construct(PessoaRepository $repo)
+    public function __construct(PartidaRepository $repo)
     {
         $this->repo = $repo;
     }
 
-    public function PessoaAll(Request $request)
+    public function PartidaAll()
     {
         return new JsonResponse($this->repo->findAll());
     }
-    public function PessoabyId($id)
+    public function PartidabyId($id)
     {
         $data = $this->repo->findById($id);
 
@@ -36,15 +34,11 @@ class PessoaController
         else
             return new JsonResponse("Objeto não encontrado", 404);
     }
-    public function PessoaAdd(Request $request)
+    public function PartidaAdd(Request $request)
     {
         $data = array(
-            'nome' => $request->request->get("nome"),
-            'email' => $request->request->get("email"),
-            'senha' => Bcrypt::hash($request->request->get("senha")),
-            'data_nascimento' => $request->request->get("data_nascimento"),
-            'sexo' => $request->request->get("sexo"),
-            'telefone' => $request->request->get("telefone"),
+            'pontuacao' => $request->request->get("pontuacao"),
+            'pessoa_id' => $request->request->get("pessoa_id"),
         );
         $data = $this->repo->store($data);
         if($data != null)
@@ -53,7 +47,7 @@ class PessoaController
             return new JsonResponse("Objeto não adicionado",400);
     }
 
-    public function PessoaDelete($id)
+    public function PartidaDelete($id)
     {
         $data = $this->repo->delete($id);
         if($data != null)
@@ -62,14 +56,11 @@ class PessoaController
             return new JsonResponse("Objeto não encontrado",400);
     }
 
-    public function PessoaUpdate(Request $request, $id)
+    public function PartidaUpdate(Request $request, $id)
     {
         $data = array(
-            'nome' => $request->request->get("nome"),
-            'email' => $request->request->get("email"),
-            'data_nascimento' => $request->request->get("data_nascimento"),
-            'sexo' => $request->request->get("sexo"),
-            'telefone' => $request->request->get("telefone"),
+            'pontuacao' => $request->request->get("pontuacao"),
+            'pessoa_id' => $request->request->get("pessoa_id"),
         );
         $data = $this->repo->update($id,$data);
         if($data != null)

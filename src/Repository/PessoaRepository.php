@@ -14,4 +14,9 @@ use Game\model\Pessoa;
 class PessoaRepository extends BaseRepository
 {
     protected $modelClass = Pessoa::class;
+
+    public function findByEmail($email)
+    {
+        return $this->getEntity()->select()->where('email', '=', $email)->first();
+    }
 }

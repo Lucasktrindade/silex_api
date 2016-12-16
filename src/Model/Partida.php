@@ -8,12 +8,11 @@
 
 namespace Game\model;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class Partida extends Model
 {
-    protected $fillable = ['nome','profissao_desejada','email','data_nascimento','sexo','escolaridade','telefone','pontuacao'];
+    protected $fillable = ['pontuacao','pessoa_id'];
     protected $table = 'partida';
 
     public function perguntas()
